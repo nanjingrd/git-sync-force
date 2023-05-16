@@ -30,6 +30,11 @@ try {
     console.log("Git user email and name configured successfully!");
     console.log("Code synced successfully!");
     });
+    const time = (new Date()).toTimeString();
+    core.setOutput("succeed", time);
+    core.setOutput("message", time);
+    core.setOutput("return_code", time);
+    core.setOutput("run_log", time);
 } catch (error) {
   core.setFailed(error.message);
 }
