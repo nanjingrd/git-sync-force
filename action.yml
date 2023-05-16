@@ -1,13 +1,31 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Sync Code'
+description: 'Sync code between one repo and other'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  git_source:  # id of input
+    description: 'git url of source repo'
     required: true
-    default: 'World'
+    default: ''
+  git_source_key:  # id of input
+    description: 'key of source repo'
+    required: true
+    default: ''
+  git_remote:  # id of input
+    description: 'git url of remote repo'
+    required: true
+    default: ''
+  git_remote_key:  # id of input
+    description: 'key of remote repo'
+    required: true
+    default: ''
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  succeed: 
+    description: 'sync result'
+  message: 
+    description: 'action message'
+  return_code: 
+    description: 'return_code'
+  run_log: 
+    description: 'run_log'
 runs:
   using: 'node16'
   main: 'dist/index.js'
