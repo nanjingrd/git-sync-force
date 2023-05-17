@@ -51,15 +51,15 @@ try {
     `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
   );
 
-  console.log("Running: realpath ./code");
-  exec("realpath ./code", execCallback);
-  const barecode = stdout.trim();
-  console.log(`Finished running: realpath ./code. Output: ${barecode}`);
+  // console.log("Running: realpath ./code");
+  // exec("realpath ./code", execCallback);
+  // const barecode = stdout.trim();
+  // console.log(`Finished running: realpath ./code. Output: ${barecode}`);
 
   process.chdir(barecode.trim());
-  console.log(`cd  ${barecode}`);
-  exec("cd " + barecode, execCallback);
-
+  console.log(`cd  ./code`);
+  exec("cd ./code", execCallback);
+  exec("ls -lh", execCallback);
   exec('git config user.email "devops@cprd.tech"', execCallback);
   exec('git config user.name "codesync"', execCallback);
 
