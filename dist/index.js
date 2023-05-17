@@ -9825,7 +9825,7 @@ async function runCommands() {
           console.error("无法将密钥存储到文件：", err);
           return;
         }
-        console.log("lalla密钥已成功存储到 /tmp/git_source_key 文件。 + " + decodedKey_source + "    dddd");
+        console.log("lalla "+ git_source_key +" 密钥已成功存储到 /tmp/git_source_key 文件。 + " + decodedKey_source + "    dddd");
       }
     );
 
