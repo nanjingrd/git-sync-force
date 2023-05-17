@@ -17,7 +17,7 @@ async function runCommands() {
     const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
     console.log(decodedKey_source);
     // 将解码后的密钥存储到 /tmp/git_source_key 文件中
-    await fs.writeFile("/tmp/git_source_key", decodedKey_source, (err) => {
+    await fs.writeFile("/tmp/git_source_key", decodedKey_source, { mode: 0o400 }, (err) => {
       if (err) {
         console.error("无法将密钥存储到文件：", err);
         return;
@@ -26,7 +26,7 @@ async function runCommands() {
     });
 
     console.log(decodedKey_remote);
-    await fs.writeFile("/tmp/git_remote_key", decodedKey_remote, (err) => {
+    await fs.writeFile("/tmp/git_remote_key", decodedKey_remote, { mode: 0o400 }, (err) => {
       if (err) {
         console.error("无法将密钥存储到文件：", err);
         return;
