@@ -1,9 +1,22 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const exec = require("child_process").exec;
-const { execSync } = require('child_process');
-//const util = require("util");
-//const exec = util.promisify(require("child_process").exec);
+const exec = require('@actions/exec');
+
+let myOutput = '';
+let myError = '';
+
+const options = {};
+options.listeners = {
+  stdout: (data) => {
+    myOutput += data.toString();
+  },
+  stderr: (data) => {
+    myError += data.toString();
+  }
+};
+options.cwd = '/tmp';
+
+
 
 async function runCommands(
   git_source,
@@ -48,16 +61,19 @@ async function runCommands(
     );
 
     console.log("Running: rm -rf ./code");
-    await exec("rm -rf ./code");
+    // await exec("rm -rf ./code");
+    await exec.exec('rm -rf ./code', [ ], options);
     console.log("Finished running: rm -rf ./code");
 
     console.log( 
-      `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`
+      `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
     );
 
-    execSync(
-      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`
-    );
+    // execSync(
+    //   `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`
+    // );
+
+   await exec.exec(`GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`, [ ], options);
    
     console.log(
       `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
@@ -73,7 +89,7 @@ async function runCommands(
     console.log("cd  ./code");
     execSync("cd ./code");
     console.log("-----------------------------------------");
-    execSync("ls -lh");
+    execSync("ls /tmp");
     console.log("-----------------------------------------");
     // await exec('git config user.email "devops@cprd.tech"');
     // await exec('git config user.name "codesync"');
