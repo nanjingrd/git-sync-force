@@ -63,45 +63,42 @@ async function runCommands(git_source, git_source_key, git_remote, git_remote_ke
     // console.log(`Finished running: realpath ./code. Output: ${barecode}`);
     // process.chdir(barecode.trim());
 
-    await exec("ls -lh", execCallback);
-    console.log(`cd  ./code`);
-    await exec("cd ./code", execCallback);
-    await exec("ls -lh", execCallback);
-    await exec('git config user.email "devops@cprd.tech"', execCallback);
-    await exec('git config user.name "codesync"', execCallback);
+    await exec("ls -lh");
+    console.log("cd  ./code");
+    await exec("cd ./code");
+    await exec("ls -lh");
+    await exec('git config user.email "devops@cprd.tech"');
+    await exec('git config user.name "codesync"');
 
     console.log(
-      `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${gitRemote}`
+      `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${git_remote}`
     );
     await exec(
-      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null' git push --mirror ${gitRemote}`,
-      execCallback
+      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null' git push --mirror ${git_remote}`
     );
     console.log(
-      `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${gitRemote}`
+      `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${git_remote}`
     );
 
     console.log(
       `Running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
     );
     await exec(
-      `gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`,
-      execCallback
+      `gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
     );
     console.log(
       `Finished running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
     );
 
     console.log("Running: git push --set-upstream origin master");
-    await exec("git push --set-upstream origin master", execCallback);
+    await exec("git push --set-upstream origin master");
     console.log("Finished running: git push --set-upstream origin master");
 
     console.log(
       `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --follow-tags`
     );
     await exec(
-      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null' git push --follow-tags`,
-      execCallback
+      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null' git push --follow-tags`
     );
     console.log(
       `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --follow-tags`
@@ -163,7 +160,7 @@ try {
 
   const git_remote_key_p = core.getInput("git_remote_key");
   console.log(`git_remote_key ${git_remote_key_p}!`);
-  
+
   (async function () {
     await runCommands(git_source_p, git_source_key_p, git_remote_p, git_remote_key_p);
   })();
