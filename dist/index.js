@@ -9797,13 +9797,13 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-async function runCommands() {
-  const core = __nccwpck_require__(5127);
-  const github = __nccwpck_require__(3134);
-  //const exec = require("child_process").exec;
-  const util = __nccwpck_require__(3837);
-  const exec = util.promisify((__nccwpck_require__(2081).exec));
+const core = __nccwpck_require__(5127);
+const github = __nccwpck_require__(3134);
+//const exec = require("child_process").exec;
+const util = __nccwpck_require__(3837);
+const exec = util.promisify((__nccwpck_require__(2081).exec));
 
+async function runCommands() {
   try {
     const git_source = core.getInput("git_source");
     const git_source_key = core.getInput("git_source_key");
@@ -9811,10 +9811,6 @@ async function runCommands() {
     const git_remote_key = core.getInput("git_remote_key");
 
     const fs = __nccwpck_require__(7147);
-
-    //git_source_key 是 Base64 编码的密钥
-    const gitSourceKey = "git_source_key";
-
     // 对 git_source_key 进行 Base64 解码
     const decodedKey_source = Buffer.from(git_source_key, "base64").toString();
     const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
@@ -9838,7 +9834,7 @@ async function runCommands() {
     });
 
     console.log("Running: rm -rf ./code");
-    await exec("rm -rf ./code", execCallback);
+    await exec("rm -rf ./code");
     console.log("Finished running: rm -rf ./code");
 
     console.log(
@@ -9941,7 +9937,9 @@ async function runCommands() {
   }
 }
 
-runCommands();
+(async function () {
+  await runCommands();
+})();
 // 这是一个js的版本的github action，用于同步代码。请实现其中未完成的部分
 
 })();

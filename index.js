@@ -1,10 +1,10 @@
-async function runCommands() {
-  const core = require("@actions/core");
-  const github = require("@actions/github");
-  //const exec = require("child_process").exec;
-  const util = require("util");
-  const exec = util.promisify(require("child_process").exec);
+const core = require("@actions/core");
+const github = require("@actions/github");
+//const exec = require("child_process").exec;
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
+async function runCommands() {
   try {
     const git_source = core.getInput("git_source");
     const git_source_key = core.getInput("git_source_key");
@@ -12,10 +12,6 @@ async function runCommands() {
     const git_remote_key = core.getInput("git_remote_key");
 
     const fs = require("fs");
-
-    //git_source_key 是 Base64 编码的密钥
-    const gitSourceKey = "git_source_key";
-
     // 对 git_source_key 进行 Base64 解码
     const decodedKey_source = Buffer.from(git_source_key, "base64").toString();
     const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
@@ -39,7 +35,7 @@ async function runCommands() {
     });
 
     console.log("Running: rm -rf ./code");
-    await exec("rm -rf ./code", execCallback);
+    await exec("rm -rf ./code");
     console.log("Finished running: rm -rf ./code");
 
     console.log(
@@ -142,5 +138,7 @@ async function runCommands() {
   }
 }
 
-runCommands();
+(async function () {
+  await runCommands();
+})();
 // 这是一个js的版本的github action，用于同步代码。请实现其中未完成的部分
