@@ -25,17 +25,15 @@ async function runCommands(
   git_remote_key
 ) {
   try {
-    const sync_commond = ""
-    // ```
-    // # /bin/bash
-    // set -ex
-    // GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
-    // cd  ./code
-    // ls -lh
-    // ```
+    const sync_commond = `#/bin/bash
+    set -ex
+    GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
+    cd  ./code
+    ls -lh
+    `
     const fs = require("fs");
     fs.writeFileSync(
-      "./sync.sh",
+      "/tmp/sync.sh",
       sync_commond,
       { mode: 0o777 },
       (err) => {
@@ -82,7 +80,7 @@ async function runCommands(
 
     console.log("Running: rm -rf ./code");
     // await exec("rm -rf ./code");
-    await exec.exec('bash', [ "./sync.sh" ]);
+    await exec.exec('bash', [ "/tmp/sync.sh" ]);
     await exec.exec('rm -rf ./code', [ ], options);
     console.log("Finished running: rm -rf ./code");
 
