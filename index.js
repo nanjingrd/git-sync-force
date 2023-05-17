@@ -25,14 +25,14 @@ async function runCommands(
   git_remote_key
 ) {
   try {
-    const sync_commond = 
-    ```
-    # /bin/bash
-    set -ex
-    GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
-    cd  ./code
-    ls -lh
-    ```
+    const sync_commond = ""
+    // ```
+    // # /bin/bash
+    // set -ex
+    // GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
+    // cd  ./code
+    // ls -lh
+    // ```
     const fs = require("fs");
     fs.writeFileSync(
       "./sync.sh",
