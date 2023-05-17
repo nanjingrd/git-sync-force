@@ -4,10 +4,13 @@ const github = require("@actions/github");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-async function runCommands(git_source, git_source_key, git_remote, git_remote_key ) {
+async function runCommands(
+  git_source,
+  git_source_key,
+  git_remote,
+  git_remote_key
+) {
   try {
-   
-
     const fs = require("fs");
     // 对 git_source_key 进行 Base64 解码
     const decodedKey_source = Buffer.from(git_source_key, "base64").toString();
@@ -23,7 +26,13 @@ async function runCommands(git_source, git_source_key, git_remote, git_remote_ke
           console.error("无法将密钥存储到文件：", err);
           return;
         }
-        console.log("lalla "+ git_source_key +" 密钥已成功存储到 /tmp/git_source_key 文件。 + " + decodedKey_source + "    dddd");
+        console.log(
+          "lalla " +
+            git_source_key +
+            " 密钥已成功存储到 /tmp/git_source_key 文件。 + " +
+            decodedKey_source +
+            "    dddd"
+        );
       }
     );
 
@@ -66,9 +75,11 @@ async function runCommands(git_source, git_source_key, git_remote, git_remote_ke
     await exec("ls -lh");
     console.log("cd  ./code");
     await exec("cd ./code");
+    console.log("-----------------------------------------")
     await exec("ls -lh");
-    await exec('git config user.email "devops@cprd.tech"');
-    await exec('git config user.name "codesync"');
+    console.log("-----------------------------------------")
+    // await exec('git config user.email "devops@cprd.tech"');
+    // await exec('git config user.name "codesync"');
 
     console.log(
       `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${git_remote}`
@@ -80,15 +91,15 @@ async function runCommands(git_source, git_source_key, git_remote, git_remote_ke
       `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git push --mirror ${git_remote}`
     );
 
-    console.log(
-      `Running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
-    );
-    await exec(
-      `gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
-    );
-    console.log(
-      `Finished running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
-    );
+    // console.log(
+    //   `Running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
+    // );
+    // await exec(
+    //   `gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
+    // );
+    // console.log(
+    //   `Finished running: gh api repos/${org}/${value} --method PATCH --field 'default_branch=master' --silent`
+    // );
 
     console.log("Running: git push --set-upstream origin master");
     await exec("git push --set-upstream origin master");
@@ -146,7 +157,7 @@ async function runCommands(git_source, git_source_key, git_remote, git_remote_ke
 
 try {
   // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
+  const nameToGreet = core.getInput("who-to-greet");
   console.log(`Hello ${nameToGreet}!`);
 
   const git_source_p = core.getInput("git_source");
@@ -162,12 +173,21 @@ try {
   console.log(`git_remote_key ${git_remote_key_p}!`);
 
   (async function () {
-    await runCommands(git_source_p, git_source_key_p, git_remote_p, git_remote_key_p);
+    await runCommands(
+      git_source_p,
+      git_source_key_p,
+      git_remote_p,
+      git_remote_key_p
+    );
   })();
 
+  const time = "2023"
+  core.setOutput("succeed", time);
+  core.setOutput("message", time);
+  core.setOutput("return_code", time);
+  core.setOutput("run_log", time);
 } catch (error) {
   core.setFailed(error.message);
 }
-
 
 // 这是一个js的版本的github action，用于同步代码。请实现其中未完成的部分
