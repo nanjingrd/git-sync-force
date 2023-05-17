@@ -9950,12 +9950,13 @@ try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
-  const git_source = core.getInput("git_source");
-  const git_source_key = core.getInput("git_source_key");
-  const git_remote = core.getInput("git_remote");
-  const git_remote_key = core.getInput("git_remote_key");
+  const git_source_p = core.getInput("git_source");
+  console.log(`Hello ${git_source}!`);
+  const git_source_key_p = core.getInput("git_source_key");
+  const git_remote_p = core.getInput("git_remote");
+  const git_remote_key_p = core.getInput("git_remote_key");
   (async function () {
-    await runCommands(git_source, git_source_key, git_remote, git_remote_key);
+    await runCommands(git_source_p, git_source_key_p, git_remote_p, git_remote_key_p);
   })();
 
 } catch (error) {
