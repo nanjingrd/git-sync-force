@@ -9817,7 +9817,7 @@ async function runCommands(
     // console.log("git_source_key " + git_source_key);
     // console.log("source key after decode " + decodedKey_source);
     // 将解码后的密钥存储到 /tmp/git_source_key 文件中
-    await fs.writeFile(
+    fs.writeFileSync(
       "/tmp/git_source_key",
       decodedKey_source,
       { mode: 0o400 },
@@ -9833,7 +9833,7 @@ async function runCommands(
     const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
     // console.log("git_remote_key " + git_remote_key);
     // console.log("remote key after decode " + decodedKey_remote);
-    await fs.writeFile(
+    fs.writeFileSync(
       "/tmp/git_remote_key",
       decodedKey_remote,
       { mode: 0o400 },
