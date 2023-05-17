@@ -9817,7 +9817,7 @@ try {
   // 对 git_source_key 进行 Base64 解码
   const decodedKey_source = Buffer.from(git_source_key, "base64").toString();
   const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
-  console.log(decodedKey_source)
+  console.log(decodedKey_source);
   // 将解码后的密钥存储到 /tmp/git_source_key 文件中
   fs.writeFile("/tmp/git_source_key", decodedKey_source, (err) => {
     if (err) {
@@ -9827,7 +9827,7 @@ try {
     console.log("密钥已成功存储到 /tmp/git_source_key 文件。");
   });
 
-  console.log(decodedKey_remote)
+  console.log(decodedKey_remote);
   fs.writeFile("/tmp/git_remote_key", decodedKey_remote, (err) => {
     if (err) {
       console.error("无法将密钥存储到文件：", err);
@@ -9851,7 +9851,8 @@ try {
   );
 
   console.log("Running: realpath ./code");
-  const { stdout: barecode } = exec("realpath ./code", execCallback);
+  exec("realpath ./code", execCallback);
+  const barecode = stdout.trim();
   console.log(`Finished running: realpath ./code. Output: ${barecode}`);
 
   process.chdir(barecode.trim());
