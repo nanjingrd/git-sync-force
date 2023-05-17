@@ -57,6 +57,7 @@ try {
   // console.log(`Finished running: realpath ./code. Output: ${barecode}`);
   // process.chdir(barecode.trim());
   
+  exec("ls -lh", execCallback);
   console.log(`cd  ./code`);
   exec("cd ./code", execCallback);
   exec("ls -lh", execCallback);
