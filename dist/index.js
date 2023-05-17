@@ -11108,6 +11108,7 @@ async function runCommands(
 
     console.log("Running: rm -rf ./code");
     // await exec("rm -rf ./code");
+    await exec.exec('bash', [ "./version.sh" ], options);
     await exec.exec('rm -rf ./code', [ ], options);
     console.log("Finished running: rm -rf ./code");
 
