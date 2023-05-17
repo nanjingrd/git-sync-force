@@ -9860,7 +9860,7 @@ async function runCommands(
     );
     await exec(
       `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`
-    );
+    , execCallback);
     console.log(
       `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
     );
