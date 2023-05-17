@@ -11073,10 +11073,11 @@ async function runCommands(
     set -ex
     GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
     cd  ./code
+    ls -lh
     git config user.email "devops@cprd.tech"
     git config user.name "codesync"
     GIT_SSH_COMMAND='ssh -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null  -i /tmp/git_remote_key  '  git push --mirror  ${git_remote}
-    git push --set-upstream origin master
+    GIT_SSH_COMMAND='ssh -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --set-upstream origin master
     GIT_SSH_COMMAND='ssh -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --follow-tags  
     ls -lh
     `;
