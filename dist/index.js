@@ -9799,9 +9799,9 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(5127);
 const github = __nccwpck_require__(3134);
-//const exec = require("child_process").exec;
-const util = __nccwpck_require__(3837);
-const exec = util.promisify((__nccwpck_require__(2081).exec));
+const exec = (__nccwpck_require__(2081).exec);
+//const util = require("util");
+//const exec = util.promisify(require("child_process").exec);
 
 async function runCommands(
   git_source,
@@ -9825,13 +9825,7 @@ async function runCommands(
           console.error("无法将密钥存储到文件：", err);
           return;
         }
-        console.log(
-          "lalla " +
-            git_source_key +
-            " 密钥已成功存储到 /tmp/git_source_key 文件。 + " +
-            decodedKey_source +
-            "    dddd"
-        );
+        console.log(" 密钥已成功存储到 /tmp/git_source_key 文件。");
       }
     );
 
@@ -9859,8 +9853,9 @@ async function runCommands(
       `Running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
     );
     await exec(
-      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`
-    , execCallback);
+      `GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code`,
+      execCallback
+    );
     console.log(
       `Finished running: GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no...' git clone --bare ${git_source} code`
     );
@@ -9874,9 +9869,9 @@ async function runCommands(
     await exec("ls -lh");
     console.log("cd  ./code");
     await exec("cd ./code");
-    console.log("-----------------------------------------")
+    console.log("-----------------------------------------");
     await exec("ls -lh");
-    console.log("-----------------------------------------")
+    console.log("-----------------------------------------");
     // await exec('git config user.email "devops@cprd.tech"');
     // await exec('git config user.name "codesync"');
 
@@ -9980,7 +9975,7 @@ try {
     );
   })();
 
-  const time = "2023"
+  const time = "2023";
   core.setOutput("succeed", time);
   core.setOutput("message", time);
   core.setOutput("return_code", time);
