@@ -9803,12 +9803,9 @@ const github = __nccwpck_require__(3134);
 const util = __nccwpck_require__(3837);
 const exec = util.promisify((__nccwpck_require__(2081).exec));
 
-async function runCommands() {
+async function runCommands(git_source, git_source_key, git_remote, git_remote_key ) {
   try {
-    const git_source = core.getInput("git_source");
-    const git_source_key = core.getInput("git_source_key");
-    const git_remote = core.getInput("git_remote");
-    const git_remote_key = core.getInput("git_remote_key");
+   
 
     const fs = __nccwpck_require__(7147);
     // 对 git_source_key 进行 Base64 解码
@@ -9949,9 +9946,23 @@ async function runCommands() {
   }
 }
 
-(async function () {
-  await runCommands();
-})();
+try {
+  // `who-to-greet` input defined in action metadata file
+  const nameToGreet = core.getInput('who-to-greet');
+  console.log(`Hello ${nameToGreet}!`);
+  const git_source = core.getInput("git_source");
+  const git_source_key = core.getInput("git_source_key");
+  const git_remote = core.getInput("git_remote");
+  const git_remote_key = core.getInput("git_remote_key");
+  (async function () {
+    await runCommands(git_source, git_source_key, git_remote, git_remote_key);
+  })();
+
+} catch (error) {
+  core.setFailed(error.message);
+}
+
+
 // 这是一个js的版本的github action，用于同步代码。请实现其中未完成的部分
 
 })();
