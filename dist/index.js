@@ -11081,7 +11081,7 @@ async function runCommands(
     ```
     const fs = __nccwpck_require__(7147);
     fs.writeFileSync(
-      "/tmp/sync.sh",
+      "./sync.sh",
       sync_commond,
       { mode: 0o777 },
       (err) => {
@@ -11128,7 +11128,7 @@ async function runCommands(
 
     console.log("Running: rm -rf ./code");
     // await exec("rm -rf ./code");
-    await exec.exec('bash', [ "./version.sh" ]);
+    await exec.exec('bash', [ "./sync.sh" ]);
     await exec.exec('rm -rf ./code', [ ], options);
     console.log("Finished running: rm -rf ./code");
 
