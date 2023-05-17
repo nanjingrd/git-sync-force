@@ -14,8 +14,8 @@ async function runCommands(
     const fs = require("fs");
     // 对 git_source_key 进行 Base64 解码
     const decodedKey_source = Buffer.from(git_source_key, "base64").toString();
-    console.log("git_source_key " + git_source_key);
-    console.log("source key after decode " + decodedKey_source);
+    // console.log("git_source_key " + git_source_key);
+    // console.log("source key after decode " + decodedKey_source);
     // 将解码后的密钥存储到 /tmp/git_source_key 文件中
     await fs.writeFile(
       "/tmp/git_source_key",
@@ -37,8 +37,8 @@ async function runCommands(
     );
 
     const decodedKey_remote = Buffer.from(git_remote_key, "base64").toString();
-    console.log("git_remote_key " + git_remote_key);
-    console.log("remote key after decode " + decodedKey_remote);
+    // console.log("git_remote_key " + git_remote_key);
+    // console.log("remote key after decode " + decodedKey_remote);
     await fs.writeFile(
       "/tmp/git_remote_key",
       decodedKey_remote,
@@ -164,13 +164,13 @@ try {
   console.log(`git_source ${git_source_p}!`);
 
   const git_source_key_p = core.getInput("git_source_key");
-  console.log(`git_source_key ${git_source_key_p}!`);
+  // console.log(`git_source_key ${git_source_key_p}!`);
 
   const git_remote_p = core.getInput("git_remote");
   console.log(`git_remote ${git_remote_p}!`);
 
   const git_remote_key_p = core.getInput("git_remote_key");
-  console.log(`git_remote_key ${git_remote_key_p}!`);
+  // console.log(`git_remote_key ${git_remote_key_p}!`);
 
   (async function () {
     await runCommands(
