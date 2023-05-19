@@ -11084,7 +11084,7 @@ async function runCommands(
     date
     # GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --set-upstream origin master
     date
-    GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --follow-tags  
+    #GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --follow-tags  
     date
     ls -lh
     `;
