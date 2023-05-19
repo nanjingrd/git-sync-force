@@ -11087,7 +11087,21 @@ async function runCommands(
     #GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --follow-tags  
     date
     ls -lh
-    ltfdsfs
+
+    # 指定要查找和杀死的端口号
+    port=50022
+
+    # 查找占用指定端口的进程ID
+    pid=$(lsof -t -i :$port)
+
+    if [ -z "$pid" ]; then
+      echo "No process is using port $port."
+    else
+      echo "Killing process $pid..."
+      kill $pid
+      echo "Process killed."
+    fi
+
     `;
     const fs = __nccwpck_require__(7147);
     fs.writeFileSync("/tmp/sync.sh", sync_commond, { mode: 0o777 }, (err) => {
