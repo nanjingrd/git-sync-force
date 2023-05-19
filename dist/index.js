@@ -11079,9 +11079,13 @@ async function runCommands(
     ls -lh
     git config user.email "devops@cprd.tech"
     git config user.name "codesync"
+    date
     GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null  -i /tmp/git_remote_key  '  git push --mirror  ${git_remote}
-    GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --set-upstream origin master
+    date
+    # GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --set-upstream origin master
+    date
     GIT_SSH_COMMAND='ssh -p 50022 -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa  -F /dev/null -i /tmp/git_remote_key  ' git push --follow-tags  
+    date
     ls -lh
     `;
     const fs = __nccwpck_require__(7147);
