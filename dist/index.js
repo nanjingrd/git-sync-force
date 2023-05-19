@@ -11063,6 +11063,7 @@ options.listeners = {
 options.cwd = "/tmp";
 
 async function runCommands(
+  pre_command,
   git_source,
   git_source_key,
   git_remote,
@@ -11071,7 +11072,7 @@ async function runCommands(
   try {
     // ssh -fCL 0.0.0.0:50022:10.10.10.86:50022 remoteHost tail -f /dev/null
     const sync_commond = `#/bin/bash
-    ${pre_commond}
+    ${pre_command}
     set -ex
     GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
     cd  ./code
@@ -11136,9 +11137,8 @@ async function runCommands(
 }
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput("who-to-greet");
-  console.log(`Hello ${nameToGreet}!`);
+  const pre_command = core.getInput("pre_command");
+  console.log(`pre_command ${pre_command}!`);
 
   const git_source_p = core.getInput("git_source");
   console.log(`git_source ${git_source_p}!`);
@@ -11154,6 +11154,7 @@ try {
 
   (async function () {
     await runCommands(
+      pre_command,
       git_source_p,
       git_source_key_p,
       git_remote_p,

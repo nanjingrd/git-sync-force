@@ -1,6 +1,10 @@
 name: 'Sync Code'
 description: 'Sync code between one repo and other'
 inputs:
+  pre_command:  # id of input
+    description: 'git url of source repo'
+    required: true
+    default: ''
   git_source:  # id of input
     description: 'git url of source repo'
     required: true
