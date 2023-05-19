@@ -2,16 +2,16 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
 
-let myOutput = "";
-let myError = "";
+let output_log = "";
+let output_err = "";
 
 const options = {};
 options.listeners = {
   stdout: (data) => {
-    myOutput += data.toString();
+    output_log += data.toString();
   },
   stderr: (data) => {
-    myError += data.toString();
+    output_err += data.toString();
   },
 };
 options.cwd = "/tmp";
@@ -23,7 +23,9 @@ async function runCommands(
   git_remote_key
 ) {
   try {
+    // ssh -fCL 0.0.0.0:50022:10.10.10.86:50022 remoteHost tail -f /dev/null
     const sync_commond = `#/bin/bash
+    ${pre_commond}
     set -ex
     GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null  -i /tmp/git_source_key  ' git clone --bare ${git_source} code
     cd  ./code
@@ -85,42 +87,6 @@ async function runCommands(
   } catch (err) {
     console.error(`exec error: ${err}`);
   }
-
-  // try {
-  //   // `who-to-greet` input defined in action metadata file
-
-  //   // 设置 git 用户的邮箱和用户名
-  //   exec(`git config --global user.email test@sp.com`, execCallback);
-  //   exec(`git config --global user.name devops`, execCallback);
-  //   // 将git_source_key用base64 decoder后存到 /tmp/git_source_key
-  //   // todo
-
-  //   // git_remote_key decoder后存到 /tmp/git_remote_key
-  //   // todo
-
-  //   // 从 git_source 检出代码
-  //   exec(
-  //     ` GIT_SSH_COMMAND='ssh -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null -i /tmp/git_source_key  ' git clone --bare ${git_source} code `,
-  //     execCallback
-  //   );
-
-  //   const time = new Date().toTimeString();
-  //   core.setOutput("succeed", time);
-  //   core.setOutput("message", time);
-  //   core.setOutput("return_code", time);
-  //   core.setOutput("run_log", time);
-  // } catch (error) {
-  //   core.setFailed(error.message);
-  // }
-
-  function execCallback(error, stdout, stderr) {
-    if (error) {
-      console.error(`exec error: ${error}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
-  }
 }
 
 try {
@@ -153,7 +119,7 @@ try {
   core.setOutput("succeed", time);
   core.setOutput("message", time);
   core.setOutput("return_code", time);
-  core.setOutput("run_log", time);
+  core.setOutput("run_log", "Log\n" + output_log + "\r\n\r\nError" + output_err);
 } catch (error) {
   core.setFailed(error.message);
 }

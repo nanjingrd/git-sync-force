@@ -36,7 +36,7 @@ do
     export git_source="git@code.aliyun.com:${org}/$value.git"
     export git_remote="git@github.com:${org}/$value.git"
     export queryjson="{\"name\":\"${value}\",\"private\":true,\"visibility\":\"private\"}"
-    curl -H "Authorization: token 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" --data "${queryjson}"  https://api.github.com/orgs/${org}/repos
+    curl -H "Authorization: token $token" --data "${queryjson}"  https://api.github.com/orgs/${org}/repos
 
     rm -rf ./code
     GIT_SSH_COMMAND='ssh -o  StrictHostKeyChecking=no -o IdentitiesOnly=yes -o HostkeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-rsa -F /dev/null -i /tmp/git_source_key  ' git clone --bare $git_source code
